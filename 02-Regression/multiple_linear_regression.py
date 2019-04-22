@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 import pandas as pd
 
 # Importing the dataset
-dataset = pd.read_csv('50_Startups.csv')
+dataset = pd.read_csv('data/50_Startups.csv')
 X = dataset.iloc[:, :-1].values
 y = dataset.iloc[:, 4].values
 
@@ -21,7 +21,7 @@ X = onehotencoder.fit_transform(X).toarray()
 X = X[:, 1:]
 
 # Splitting the dataset into the Training set and Test set
-from sklearn.cross_validation import train_test_split
+from sklearn.model_selection import train_test_split
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.2, random_state = 0)
 
 # Feature Scaling
@@ -39,3 +39,7 @@ regressor.fit(X_train, y_train)
 
 # Predicting the Test set results
 y_pred = regressor.predict(X_test)
+
+# print the results
+np.set_printoptions(precision=2, suppress=True)
+print(np.column_stack((y_pred, y_test, y_pred - y_test)))
