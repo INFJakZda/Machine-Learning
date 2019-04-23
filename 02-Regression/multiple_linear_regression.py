@@ -43,3 +43,36 @@ y_pred = regressor.predict(X_test)
 # print the results
 np.set_printoptions(precision=2, suppress=True)
 print(np.column_stack((y_pred, y_test, y_pred - y_test)))
+
+# ----------------- BACKWARD ELIMINATION -----------------
+
+# Building the optimal model using Backward Elimination
+import statsmodels.formula.api as sm
+
+# append x_0 in the beggining of X
+X = np.append(arr = np.ones((50, 1)).astype(int), values = X, axis = 1)
+
+# 0 iteration
+X_opt = X[:, [0, 1, 2, 3, 4, 5]]
+regressor_OLS = sm.OLS(endog = y, exog = X_opt).fit()
+print(regressor_OLS.summary())
+
+# 1st iteration
+X_opt = X[:, [0, 1, 3, 4, 5]]
+regressor_OLS = sm.OLS(endog = y, exog = X_opt).fit()
+print(regressor_OLS.summary())
+
+# 2nd iteration
+X_opt = X[:, [0, 3, 4, 5]]
+regressor_OLS = sm.OLS(endog = y, exog = X_opt).fit()
+print(regressor_OLS.summary())
+
+# 3rd iteration
+X_opt = X[:, [0, 3, 5]]
+regressor_OLS = sm.OLS(endog = y, exog = X_opt).fit()
+print(regressor_OLS.summary())
+
+# 4th iteration
+X_opt = X[:, [0, 3]]
+regressor_OLS = sm.OLS(endog = y, exog = X_opt).fit()
+print(regressor_OLS.summary())
